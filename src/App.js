@@ -3,18 +3,7 @@ import './App.css'
 export default class App extends Component {
 
     state = {
-        todoData: [
-            {
-                id: '1',
-                title: 'study',
-                completed: true
-            },
-            {
-                id: '2',
-                title: 'clean up',
-                completed: false
-            },
-        ],
+        todoData: [],
         value: ''
     }
 
@@ -27,17 +16,16 @@ export default class App extends Component {
         float: "right"
     }
 
-    getStyle = () => {
+    getStyle = (completed) => {
         return {
             padding: "10px",
             borderBottom: "1px #ccc dotted",
-            textDecoration: "none"
+            textDecoration: completed ? "line-through" : "none",
         }
     }
 
     handleClick = (id) => {
         let newTodoData = this.state.todoData.filter(data => data.id !== id)
-        console.log('newTodoData', newTodoData)
         this.setState({ todoData: newTodoData })
     }
 
@@ -52,7 +40,17 @@ export default class App extends Component {
             title: this.state.value,
             completed: false
         }
-        this.setState({ todoData: [...this.state.todoData, newTodo] })
+        this.setState({ todoData: [...this.state.todoData, newTodo], value: '' })
+    }
+
+    handleCompleteChange = (id) => {
+        let newTodoData = this.state.todoData.map(data => {
+            if (data.id === id) {
+                data.completed = !data.completed
+            }
+            return data
+        })
+        this.setState({ todoData: newTodoData })
     }
 
     render() {
@@ -63,8 +61,8 @@ export default class App extends Component {
                         <h1>To Do List</h1>
                     </div>
                     {this.state.todoData.map((data) => (
-                        <div style={this.getStyle()} key={data.id}>
-                            <input type="checkbox" defaultChecked={false} />
+                        <div style={this.getStyle(data.completed)} key={data.id}>
+                            <input type="checkbox" defaultChecked={false} onChange={() => this.handleCompleteChange(data.id)} />
                             {data.title}
                             <button style={this.btnStyle} onClick={() => this.handleClick(data.id)}>x</button>
                         </div>
