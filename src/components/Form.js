@@ -1,7 +1,7 @@
 import React from 'react'
 
 export default function Form({ value, setValue, handleSubmit }) {
-
+    console.log('Form rendered')
     const handleChange = (e) => {
         setValue(e.target.value)
     }
@@ -19,7 +19,7 @@ export default function Form({ value, setValue, handleSubmit }) {
             <input
                 className="p-2 text-blue-400 border-2 border-blue-400 rounded hover:text-white hover:bg-blue-200"
                 type="submit"
-                value="input"
+                value="enter"
             />
         </form>
     )

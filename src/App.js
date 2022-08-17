@@ -1,11 +1,20 @@
-import { useState } from 'react'
+import { useCallback, useState } from 'react'
 import './App.css'
 import Form from './components/Form'
-import List from './components/List'
-export default function App() {
+import Lists from './components/Lists'
 
-    const [todoData, setTodoData] = useState([])
+const initialTodoData = localStorage.getItem('todoData') ? JSON.parse(localStorage.getItem('todoData')) : []
+
+export default function App() {
+    const [todoData, setTodoData] = useState(initialTodoData)
+
     const [value, setValue] = useState('')
+
+    const handleClick = useCallback((id) => {
+        let newTodoData = todoData.filter(data => data.id !== id)
+        setTodoData(newTodoData)
+        localStorage.setItem('todoData', JSON.stringify(newTodoData))
+    }, [todoData])
 
     const handleSubmit = (e) => {
         e.preventDefault()
@@ -15,7 +24,13 @@ export default function App() {
             completed: false
         }
         setTodoData(prev => [...prev, newTodo])
+        localStorage.setItem('todoData', JSON.stringify([...todoData, newTodo]))
         setValue('')
+    }
+
+    const handleRemoveClick = () => {
+        setTodoData([])
+        localStorage.setItem('todoData', JSON.stringify([]))
     }
 
     return (
@@ -23,10 +38,12 @@ export default function App() {
             <div className="w-full p-6 m-4 bg-white rounded shadow lg:w-3/4 lg:max-w-lg">
                 <div className="flex justify-between mb-3 ">
                     <h1>To Do List</h1>
+                    <button onClick={handleRemoveClick}>Delete All</button>
                 </div>
-                <List
+                <Lists
                     todoData={todoData}
                     setTodoData={setTodoData}
+                    handleClick={handleClick}
                 />
                 < Form
                     handleSubmit={handleSubmit}
