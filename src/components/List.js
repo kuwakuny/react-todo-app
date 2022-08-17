@@ -41,7 +41,7 @@ const List = React.memo(({
                 <div className="items-center">
                     <form onSubmit={handleSubmit}>
                         <input
-                            className="w-full px-3 py-2 mr-4 text-gray-500 rounded"
+                            className="w-full px-3 py-2 mr-4 text-gray-500 rounded focus:outline-none border focus:border-sky-500"
                             defaultChecked={completed}
                             value={editedTitle}
                             onChange={handleEditChange}

@@ -37,8 +37,8 @@ export default function App() {
         <div className="flex items-center justify-center w-screen h-screen bg-blue-100">
             <div className="w-full p-6 m-4 bg-white rounded shadow lg:w-3/4 lg:max-w-lg">
                 <div className="flex justify-between mb-3 ">
-                    <h1>To Do List</h1>
-                    <button onClick={handleRemoveClick}>Delete All</button>
+                    <h1 className="font-bold font-sans">To Do List</h1>
+                    <button className="p-2 text-red-400 border-2 border-red-400 rounded hover:text-white hover:bg-red-300" onClick={handleRemoveClick}>Delete All</button>
                 </div>
                 <Lists
                     todoData={todoData}
@@ -51,6 +51,6 @@ export default function App() {
                     setValue={setValue}
                 />
             </div>
-        </div>
+        </div >
     )
 }
